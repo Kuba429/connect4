@@ -1,0 +1,21 @@
+html,
+body,
+.App,
+:root,
+#root {
+	//height: 100%;
+	margin: 0;
+	padding: 0;
+}
+.board {
+	display: grid;
+	grid-template-rows: repeat(6, 1fr);
+	grid-template-columns: repeat(7, 1fr);
+	gap: 10px;
+	max-width: 90vmin;
+	margin: 1rem auto;
+	div {
+		aspect-ratio: 1 / 1;
+		border: 1px solid black;
+	}
+}
