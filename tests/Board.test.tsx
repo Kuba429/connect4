@@ -1,7 +1,7 @@
 import { Board } from "../src/components/Board";
 import React from "react";
-import { getEmptyBoard } from "../src/store";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
+import { getEmptyBoard } from "../src/board";
 
 describe("Board component", () => {
 	test("Board is 7x6", () => {
