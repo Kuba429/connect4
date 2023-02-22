@@ -24,17 +24,6 @@ export const store = proxy({
 	turn: 1 as player,
 });
 
-export const insertCell = (x: number, value: player) => {
-	for (let y = store.board.length - 1; y >= 0; y--) {
-		const row = store.board[y];
-		if (row[x].value === null) {
-			row[x].value = value;
-			return;
-		}
-	}
-	console.log("no space");
-};
-
 export const toggleTurn = () => {
 	if (store.turn === 1) {
 		store.turn = 2;

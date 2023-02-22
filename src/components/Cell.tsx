@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { insertCell, player, store } from "../store";
+import { player, store } from "../store";
 
 export type cell = {
 	value: player | null;
@@ -15,4 +15,15 @@ export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 			{cell.value}
 		</div>
 	);
+};
+
+export const insertCell = (x: number, value: player) => {
+	for (let y = store.board.length - 1; y >= 0; y--) {
+		const row = store.board[y];
+		if (row[x].value === null) {
+			row[x].value = value;
+			return;
+		}
+	}
+	console.log("no space");
 };
