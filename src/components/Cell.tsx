@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { checkResultByCell } from "../gameResult";
 import { player, store } from "../store";
 
 export type cell = {
@@ -9,7 +10,13 @@ export type cell = {
 };
 
 export const Cell: FC<{ cell: cell }> = ({ cell }) => {
-	const handleClick = () => insertCell(cell.x, store.turn); // this store access doesn't need to be reactive; only accesses on click; love valtio <3
+	const handleClick = () => {
+		const newCell = insertCell(cell.x, store.turn);
+		if (!newCell) return;
+		const result = checkResultByCell(newCell.x, newCell.y, store.board);
+		if (!result) return;
+		store.winner = result.winner;
+	}; // this store access doesn't need to be reactive; only accesses proxy on click; love valtio <3
 	return (
 		<div
 			style={{
@@ -30,8 +37,8 @@ export const insertCell = (x: number, value: player) => {
 		const row = store.board[y];
 		if (row[x].value === null) {
 			row[x].value = value;
-			return;
+			return { x, y };
 		}
 	}
-	console.log("no space");
+	return null;
 };
