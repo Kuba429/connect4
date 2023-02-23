@@ -1,5 +1,6 @@
 import { proxy, subscribe } from "valtio";
 import { getEmptyBoard } from "./board";
+import { checkResult } from "./gameResult";
 
 export type player = 1 | 2;
 
@@ -16,4 +17,8 @@ export const toggleTurn = () => {
 	}
 };
 
-subscribe(store.board, toggleTurn);
+subscribe(store.board, () => {
+	const result = checkResult(store.board);
+	if (result) console.log(`${result.winner} won`);
+	toggleTurn();
+});
