@@ -17,17 +17,14 @@ export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 		if (!result) return;
 		store.winner = result.winner;
 	}; // this store access doesn't need to be reactive; only accesses proxy on click; love valtio <3
+	const colorClass = cell.value ? "player" + cell.value : "";
 	return (
-		<div
-			style={{
-				border: "3px solid black",
-				borderColor:
-					cell.value === 1 ? "red" : cell.value === 2 ? "blue" : "",
-			}}
-			onClick={handleClick}
-			className="cell"
-		>
-			{cell.id}
+		<div onClick={handleClick} className={`cell ${colorClass}`}>
+			{
+				// parent div is a white, empty cell; a placeholder
+				// the div inside is the one getting colored and animated
+			}
+			<div></div>
 		</div>
 	);
 };

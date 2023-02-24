@@ -14,8 +14,35 @@ body,
 	gap: 10px;
 	max-width: 90vmin;
 	margin: 1rem auto;
+	padding: 1rem;
+	background: blue;
+}
+.cell {
+	aspect-ratio: 1 / 1;
+	border: 1px solid black;
+	background: white;
+	border-radius: 50%;
 	div {
-		aspect-ratio: 1 / 1;
-		border: 1px solid black;
+		transform: translateY(-150vh);
+		transition: ease transform 0.4s;
+		width: 100%;
+		height: 100%;
+		border-radius: inherit;
+	}
+	&.player1,
+	&.player2 {
+		div {
+			transform: translateY(0);
+		}
+	}
+	&.player1 {
+		div {
+			background-color: red;
+		}
+	}
+	&.player2 {
+		div {
+			background-color: yellow;
+		}
 	}
 }
