@@ -5,13 +5,10 @@ import { Cell } from "./Cell";
 export const Board = () => {
 	const state = useSnapshot(store);
 	return (
-		<>
-			{state.winner ?? ""}
-			<div className="board">
-				{state.board.flat().map((c) => (
-					<Cell cell={c} key={c.id} />
-				))}
-			</div>
-		</>
+		<div className="board">
+			{state.board.flat().map((c) => (
+				<Cell cell={c} key={c.id} />
+			))}
+		</div>
 	);
 };

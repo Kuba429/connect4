@@ -11,6 +11,7 @@ export type cell = {
 
 export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 	const handleClick = () => {
+		if (store.winner) return;
 		const newCell = insertCell(cell.x, store.turn);
 		if (!newCell) return;
 		const result = checkResultByCell(newCell.x, newCell.y, store.board);
