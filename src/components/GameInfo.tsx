@@ -1,5 +1,5 @@
 import { useSnapshot } from "valtio";
-import { player, store } from "../store";
+import { newGame, player, store } from "../store";
 
 export const GameInfo = () => {
 	const state = useSnapshot(store);
@@ -9,7 +9,7 @@ export const GameInfo = () => {
 	return (
 		<div className="game-info">
 			<h1>{h1}</h1>
-			<button>New game</button>
+			<button onClick={newGame}>New game</button>
 		</div>
 	);
 };

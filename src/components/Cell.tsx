@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { checkResultByCell } from "../gameResult";
-import { player, store } from "../store";
+import { player, store, toggleTurn } from "../store";
 
 export type cell = {
 	value: player | null;
@@ -14,6 +14,7 @@ export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 		if (store.winner) return;
 		const newCell = insertCell(cell.x, store.turn);
 		if (!newCell) return;
+		toggleTurn();
 		const result = checkResultByCell(newCell.x, newCell.y, store.board);
 		if (!result) return;
 		store.winner = result.winner;

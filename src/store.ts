@@ -1,12 +1,13 @@
-import { proxy, subscribe } from "valtio";
+import { proxy } from "valtio";
 import { getEmptyBoard } from "./board";
 
 export type player = 1 | 2;
 
+const randomTurn = (): player => (Math.random() > 0.5 ? 1 : 2);
 export const store = proxy({
 	board: getEmptyBoard(),
 	winner: null as player | null,
-	turn: 1 as player,
+	turn: randomTurn(),
 });
 
 export const toggleTurn = () => {
@@ -17,6 +18,8 @@ export const toggleTurn = () => {
 	}
 };
 
-subscribe(store.board, () => {
-	toggleTurn();
-});
+export const newGame = () => {
+	store.board = getEmptyBoard();
+	store.winner = null;
+	store.turn = randomTurn();
+};
