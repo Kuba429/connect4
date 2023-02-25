@@ -12,9 +12,9 @@ export type cell = {
 export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 	const handleClick = () => {
 		if (store.winner) return;
-		const newCell = insertCell(cell.x, store.turn);
+		const newCell = insertCell(store.board, cell.x, store.turn);
 		if (!newCell) return;
-		toggleTurn();
+		store.turn = toggleTurn(store.turn);
 		const result = checkResultByCell(newCell.x, newCell.y, store.board);
 		if (!result) return;
 		store.winner = result.winner;
@@ -31,9 +31,9 @@ export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 	);
 };
 
-export const insertCell = (x: number, value: player) => {
-	for (let y = store.board.length - 1; y >= 0; y--) {
-		const row = store.board[y];
+export const insertCell = (board: cell[][], x: number, value: player) => {
+	for (let y = board.length - 1; y >= 0; y--) {
+		const row = board[y];
 		if (row[x].value === null) {
 			row[x].value = value;
 			return { x, y };

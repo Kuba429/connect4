@@ -10,12 +10,11 @@ export const store = proxy({
 	turn: randomTurn(),
 });
 
-export const toggleTurn = () => {
-	if (store.turn === 1) {
-		store.turn = 2;
-	} else if (store.turn === 2) {
-		store.turn = 1;
+export const toggleTurn = (turn: player) => {
+	if (turn === 1) {
+		return 2;
 	}
+	return 1;
 };
 
 export const newGame = () => {
