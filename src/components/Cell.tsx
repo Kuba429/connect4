@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { checkResultByCell } from "../gameResult";
+import { makeMove } from "../minimax";
 import { player, store, toggleTurn } from "../store";
 
 export type cell = {
@@ -16,8 +17,11 @@ export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 		if (!newCell) return;
 		store.turn = toggleTurn(store.turn);
 		const result = checkResultByCell(newCell.x, newCell.y, store.board);
-		if (!result) return;
-		store.winner = result.winner;
+		if (result) {
+			store.winner = result.winner;
+			return;
+		}
+		makeMove();
 	}; // this store access doesn't need to be reactive; only accesses proxy on click; love valtio <3
 	const colorClass = cell.value ? "player" + cell.value : "";
 	return (
