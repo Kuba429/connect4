@@ -19,6 +19,6 @@ describe("Cell component", () => {
 		const emptyCellsBefore = countEmptyCells();
 		await userEvent.click(cell!);
 		const emptyCellsAfter = countEmptyCells();
-		expect(emptyCellsAfter).toBe(emptyCellsBefore - 1);
+		expect(emptyCellsAfter).toBe(emptyCellsBefore - 2); // before - the cell that was clicked by player - the cell that ai "clicked"
 	});
 });

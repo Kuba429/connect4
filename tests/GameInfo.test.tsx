@@ -1,10 +1,11 @@
-import { render, screen, act, cleanup } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 import { expect } from "vitest";
 import { GameInfo } from "../src/components/GameInfo";
 import { App } from "../src/App";
 import { store } from "../src/store";
+import { insertCell } from "../src/components/Cell";
 
 describe("GameInfo component", () => {
 	test("Component mounts", () => {
@@ -17,15 +18,15 @@ describe("GameInfo component", () => {
 		// displays who's turn is it now
 		let h1 = screen.getByText(/'s turn/);
 		expect(h1).toBeInTheDocument();
+		store.turn = 1;
 		// make 1 win
-		const cells = Array.from(container.querySelectorAll(".cell")).slice(
-			0,
-			4
-		);
-		for (const cell of cells) {
-			store.turn = 1;
-			await userEvent.click(cell);
+		// make first 3 cells have value 1. Don't click on the cells; ai would block the win
+		for (let i = 1; i < 4; i++) {
+			insertCell(store.board, i, 1);
 		}
+		const firstCell = container.querySelector(".cell")!;
+		expect(firstCell).toBeInTheDocument();
+		await userEvent.click(firstCell);
 		// displays who won
 		h1 = screen.getByText(/won/);
 		expect(h1).toBeInTheDocument();
