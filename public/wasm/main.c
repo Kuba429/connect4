@@ -15,20 +15,22 @@ int toggle_maximizing();
 int toggle_turn();
 struct position insert_cell();
 
-int get_best_move(int board[6][7], int turn, int player, int ai) {
+int get_best_move(int8_t board_prop[6 * 7], int turn, int player, int ai) {
+  int board[6][7] = {0};
+  // TODO reshape the board array
   int best_x = 0;
   int best_score = -10000;
-  for (int i = 0; i < 7; i++) {
-    struct position cell = insert_cell(&board, i, turn);
-    if (cell.x == -1 || cell.y == -1)
-      continue;
-    int current_score = minimax(&board, cell, turn, player, ai, 0, 3);
-    board[cell.y][cell.x] = 0;
-    if (current_score > best_score) {
-      best_score = current_score;
-      best_x = i;
-    }
-  };
+  //  for (int i = 0; i < 7; i++) {
+  //    struct position cell = insert_cell(&board, i, turn);
+  //    if (cell.x == -1 || cell.y == -1)
+  //      continue;
+  //    int current_score = minimax(&board, cell, turn, player, ai, 0, 3);
+  //    board[cell.y][cell.x] = 0;
+  //    if (current_score > best_score) {
+  //      best_score = current_score;
+  //      best_x = i;
+  //    }
+  //  };
   return best_x;
 }
 int minimax(int *board[6][7], struct position last_cell, int turn, int player,
