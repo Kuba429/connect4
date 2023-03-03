@@ -44,25 +44,20 @@ int minimax(int board[6][7], struct position last_cell, int turn, int player,
             int ai, int maximizing, int depth) {
   int res = check_result_by_cell(last_cell.x, last_cell.y, board);
   if (res != 0) {
-    if (res == ai) {
-      printf("win");
-      return (depth + 1) * 1;
-    }
-    if (res == player) {
-      printf("lose");
-      return (depth + 1) * -1;
-    }
+    if (res == ai)
+      return 1;
+    if (res == player)
+      return -1;
   }
   if (depth < 1)
     return 0;
-  if (maximizing) {
+  if (maximizing == 1) {
     int best_score = -10000;
     for (int i = 0; i < 7; i++) {
       struct position cell = insert_cell(board, i, ai);
       if (cell.x == -1 || cell.y == -1)
         continue;
-      int new_score = minimax(board, cell, toggle_turn(turn), player, ai,
-                              toggle_maximizing(maximizing), depth - 1);
+      int new_score = minimax(board, cell, player, player, ai, 0, depth - 1);
       if (new_score >= best_score) {
         best_score = new_score;
       }
@@ -75,8 +70,7 @@ int minimax(int board[6][7], struct position last_cell, int turn, int player,
       struct position cell = insert_cell(board, i, player);
       if (cell.x == -1 || cell.y == -1)
         continue;
-      int new_score = minimax(board, cell, toggle_turn(turn), player, ai,
-                              toggle_maximizing(maximizing), depth - 1);
+      int new_score = minimax(board, cell, ai, player, ai, 1, depth - 1);
       if (new_score <= best_score) {
         best_score = new_score;
       }
@@ -84,7 +78,6 @@ int minimax(int board[6][7], struct position last_cell, int turn, int player,
     }
     return best_score;
   }
-  return 0;
 }
 struct position insert_cell(int board[6][7], int x, int value) {
   for (int y = 5; y >= 0; y--) {
@@ -128,7 +121,7 @@ int check_vertical(int x, int y, int board[6][7]) {
   if (og == 0)
     return 0;
   // count how many cells around have the same value
-  int count = 0;
+  int count = 1;
   int lowest = y;
   int highest = y;
 
@@ -151,7 +144,7 @@ int check_horizontal(int x, int y, int board[6][7]) {
   if (og == 0)
     return 0;
   // count how many cells around have the same value
-  int count = 0;
+  int count = 1;
   int lowest = x;
   int highest = x;
 
@@ -174,7 +167,7 @@ int check_diagonal1(int x, int y, int board[6][7]) {
   if (og == 0)
     return 0;
   // count how many cells around have the same value
-  int count = 0;
+  int count = 1;
   struct position lowest = {x, y};
   struct position highest = {x, y};
 
@@ -201,7 +194,7 @@ int check_diagonal2(int x, int y, int board[6][7]) {
   if (og == 0)
     return 0;
   // count how many cells around have the same value
-  int count = 0;
+  int count = 1;
   struct position lowest = {x, y};
   struct position highest = {x, y};
 
