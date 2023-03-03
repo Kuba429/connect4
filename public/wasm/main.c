@@ -86,7 +86,7 @@ int minimax(int board[6][7], struct position last_cell, int turn, int player,
   }
   return 0;
 }
-struct position insert_cell(int board[6][7], int x, int y, int value) {
+struct position insert_cell(int board[6][7], int x, int value) {
   for (int y = 5; y >= 0; y--) {
     if (board[y][x] == 0) {
       board[y][x] = value;
