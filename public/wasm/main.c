@@ -6,15 +6,16 @@ struct position {
   int y;
 };
 
-int check_horizontal();
-int check_vertical();
-int check_diagonal1();
-int check_diagonal2();
-int minimax();
-int check_result_by_cell();
-int toggle_maximizing();
-int toggle_turn();
-struct position insert_cell();
+int check_horizontal(int x, int y, int board[6][7]);
+int check_vertical(int x, int y, int board[6][7]);
+int check_diagonal1(int x, int y, int board[6][7]);
+int check_diagonal2(int x, int y, int board[6][7]);
+int minimax(int board[6][7], struct position last_cell, int turn, int player,
+            int ai, int maximizing, int depth);
+int check_result_by_cell(int x, int y, int board[6][7]);
+int toggle_maximizing(int bool);
+int toggle_turn(int turn);
+struct position insert_cell(int board[6][7], int x, int value);
 
 int get_best_move(int8_t board_prop[6 * 7], int turn, int player, int ai) {
   // reshape the array to 2 dimensions
