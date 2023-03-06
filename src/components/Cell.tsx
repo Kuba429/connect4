@@ -21,7 +21,7 @@ export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 			store.winner = result.winner;
 			return;
 		}
-		makeMove();
+		setTimeout(() => makeMove(), 1);
 	}; // this store access doesn't need to be reactive; only accesses proxy on click; love valtio <3
 	const colorClass = cell.value ? "player" + cell.value : "";
 	return (

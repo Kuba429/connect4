@@ -32,7 +32,7 @@ int get_best_move(int8_t board_prop[6 * 7], int turn, int player, int ai) {
     struct position cell = insert_cell(board, i, turn);
     if (cell.x == -1 || cell.y == -1)
       continue;
-    int current_score = minimax(board, cell, turn, player, ai, 0, 3);
+    int current_score = minimax(board, cell, turn, player, ai, 0, 8);
     board[cell.y][cell.x] = 0;
     if (current_score > best_score) {
       best_score = current_score;
