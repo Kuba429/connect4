@@ -7,20 +7,31 @@ body,
 	margin: 0;
 	padding: 0;
 }
+$bg: #74a0ff;
+$blue: #5289ff;
+$red: #ff4e6b;
+$yellow: #ffde68;
+body {
+	background-color: white;
+	font-family: "Golos Text", sans-serif;
+	button {
+		font-family: inherit;
+	}
+}
 .board {
 	display: grid;
 	grid-template-rows: repeat(6, 1fr);
 	grid-template-columns: repeat(7, 1fr);
-	gap: 10px;
+	gap: 15px;
 	max-width: 90vmin;
 	margin: 1rem auto;
 	padding: 1rem;
-	background: blue;
+	background: $blue;
+	border-radius: 5%;
 }
 .cell {
 	aspect-ratio: 1 / 1;
-	border: 1px solid black;
-	background: white;
+	background: $bg;
 	border-radius: 50%;
 	div {
 		transform: translateY(-150vh);
@@ -37,12 +48,12 @@ body,
 	}
 	&.player1 {
 		div {
-			background-color: red;
+			background-color: $red;
 		}
 	}
 	&.player2 {
 		div {
-			background-color: yellow;
+			background-color: $yellow;
 		}
 	}
 }
@@ -54,8 +65,16 @@ body,
 		padding: 0;
 		margin: 0;
 	}
-	p {
-		padding: 10px;
+	button {
+		padding: 3px 5px;
 		margin: 0;
+		border: none;
+		background-color: #eeeeee;
+		transition: ease background-color 0.2s;
+		border-radius: 5px;
+		cursor: pointer;
+		&:hover {
+			background-color: #dedede;
+		}
 	}
 }
