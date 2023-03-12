@@ -2,16 +2,27 @@ import { cell, insertCell } from "./components/Cell";
 import { checkResultByCell } from "./gameResult";
 import { player, store, toggleTurn } from "./store";
 
+const getBestMove: (
+	board: Int8Array,
+	turn: player,
+	player: player,
+	ai: player
+	//@ts-ignore
+) => number = Module.cwrap("get_best_move", "number", [
+	"array",
+	"number",
+	"number",
+	"number",
+]);
 export const makeMove = () => {
 	const boardProp = Int8Array.from(
 		store.board.flat().map((c) => c.value ?? 0)
 	);
-	//@ts-ignore
-	const bestX = Module.ccall(
-		"get_best_move",
-		"number",
-		["array", "number", "number", "number"],
-		[boardProp, store.turn, toggleTurn(store.turn), store.turn]
+	const bestX = getBestMove(
+		boardProp,
+		store.turn,
+		toggleTurn(store.turn),
+		store.turn
 	);
 	const cell = insertCell(store.board, bestX, store.turn);
 	if (!cell) throw Error("aaa");
