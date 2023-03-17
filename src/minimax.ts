@@ -8,12 +8,11 @@ const getBestMove: (
 	player: player,
 	ai: player
 	//@ts-ignore
-) => number = Module.cwrap("get_best_move", "number", [
-	"array",
+) => number = (window["Module"] ?? require("../public/wasm/wasm_loader")).cwrap(
+	"get_best_move",
 	"number",
-	"number",
-	"number",
-]);
+	["array", "number", "number", "number"]
+);
 export const makeMove = () => {
 	const boardProp = Int8Array.from(
 		store.board.flat().map((c) => c.value ?? 0)
