@@ -112,7 +112,7 @@ int check_result_by_cell(int x, int y, int board[6][7]) {
   int diag1 = check_diagonal1(x, y, board);
   if (diag1 != 0)
     return diag1;
-  int diag2 = check_diagonal1(x, y, board);
+  int diag2 = check_diagonal2(x, y, board);
   if (diag1 != 0)
     return diag1;
   return 0;
