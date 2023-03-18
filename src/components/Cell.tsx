@@ -21,7 +21,8 @@ export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 			store.winner = result.winner;
 			return;
 		}
-		setTimeout(() => makeMove(), 1);
+		// IMPORTANT looks like safari blocks the main thread and awaits small timeouts. 50 seems to not be awaited
+		setTimeout(() => makeMove(), 50);
 	}; // this store access doesn't need to be reactive; only accesses proxy on click; love valtio <3
 	const colorClass = cell.value ? "player" + cell.value : "";
 	return (
