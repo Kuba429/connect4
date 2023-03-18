@@ -11,7 +11,7 @@ int check_vertical(int x, int y, int board[6][7]);
 int check_diagonal1(int x, int y, int board[6][7]);
 int check_diagonal2(int x, int y, int board[6][7]);
 int minimax(int board[6][7], struct position last_cell, int turn, int player,
-            int ai, int maximizing, int depth);
+            int ai, int maximizing, int depth, int alpha, int beta);
 int check_result_by_cell(int x, int y, int board[6][7]);
 int toggle_maximizing(int bool);
 int toggle_turn(int turn);
@@ -34,7 +34,8 @@ int get_best_move(int8_t board_prop[6 * 7], int turn, int player, int ai) {
     struct position cell = insert_cell(board, x, turn);
     if (cell.x == -1 || cell.y == -1)
       continue;
-    int current_score = minimax(board, cell, turn, player, ai, 0, 8);
+    int current_score =
+        minimax(board, cell, turn, player, ai, 0, 8, -10000, 10000);
     board[cell.y][cell.x] = 0;
     if (current_score > best_score) {
       best_score = current_score;
@@ -44,7 +45,7 @@ int get_best_move(int8_t board_prop[6 * 7], int turn, int player, int ai) {
   return best_x;
 }
 int minimax(int board[6][7], struct position last_cell, int turn, int player,
-            int ai, int maximizing, int depth) {
+            int ai, int maximizing, int depth, int alpha, int beta) {
   int res = check_result_by_cell(last_cell.x, last_cell.y, board);
   if (res != 0) {
     if (res == ai)
@@ -60,11 +61,15 @@ int minimax(int board[6][7], struct position last_cell, int turn, int player,
       struct position cell = insert_cell(board, i, ai);
       if (cell.x == -1 || cell.y == -1)
         continue;
-      int new_score = minimax(board, cell, player, player, ai, 0, depth - 1);
-      if (new_score >= best_score) {
+      int new_score =
+          minimax(board, cell, player, player, ai, 0, depth - 1, alpha, beta);
+      if (new_score > best_score)
         best_score = new_score;
-      }
+      if (new_score > alpha)
+        alpha = new_score;
       board[cell.y][cell.x] = 0;
+      if (beta <= alpha)
+        break;
     }
     return best_score;
   } else {
@@ -73,11 +78,15 @@ int minimax(int board[6][7], struct position last_cell, int turn, int player,
       struct position cell = insert_cell(board, i, player);
       if (cell.x == -1 || cell.y == -1)
         continue;
-      int new_score = minimax(board, cell, ai, player, ai, 1, depth - 1);
-      if (new_score <= best_score) {
+      int new_score =
+          minimax(board, cell, ai, player, ai, 1, depth - 1, alpha, beta);
+      if (new_score < best_score)
         best_score = new_score;
-      }
+      if (new_score < beta)
+        beta = new_score;
       board[cell.y][cell.x] = 0;
+      if (beta <= alpha)
+        break;
     }
     return best_score;
   }
