@@ -28,15 +28,17 @@ int get_best_move(int8_t board_prop[6 * 7], int turn, int player, int ai) {
   }
   int best_x = 0;
   int best_score = -10000;
+  int choices[7] = {3, 2, 4, 1, 5, 0, 6};
   for (int i = 0; i < 7; i++) {
-    struct position cell = insert_cell(board, i, turn);
+    int x = choices[i];
+    struct position cell = insert_cell(board, x, turn);
     if (cell.x == -1 || cell.y == -1)
       continue;
     int current_score = minimax(board, cell, turn, player, ai, 0, 8);
     board[cell.y][cell.x] = 0;
     if (current_score > best_score) {
       best_score = current_score;
-      best_x = i;
+      best_x = x;
     }
   };
   return best_x;
