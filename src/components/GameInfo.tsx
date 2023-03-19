@@ -8,9 +8,6 @@ export const GameInfo = () => {
 	let h1 = "It's a draw";
 	if (!state.isOver) h1 = `${getColor(state.turn)}'s turn`;
 	else if (state.winner !== null) h1 = `${getColor(state.winner)} won`;
-	useEffect(() => {
-		console.log(howManyEmptyCells(store.board));
-	}, [state.board]);
 	return (
 		<div className="game-info">
 			<h1>{h1}</h1>
