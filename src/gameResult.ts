@@ -6,6 +6,9 @@ type winResult = {
 	cells: cell[];
 };
 
+export const howManyEmptyCells = (board: cell[][]) =>
+	board.flat().filter((c) => !c.value).length;
+
 export const checkResult = (board: cell[][]): player | null => {
 	for (let y = 0; y < board.length; y++) {
 		const row = board[y];

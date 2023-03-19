@@ -3,10 +3,10 @@ import { getEmptyBoard } from "./board";
 
 export type player = 1 | 2;
 
-const randomTurn = (): player => (Math.random() > 0.5 ? 1 : 2);
 export const store = proxy({
 	board: getEmptyBoard(),
 	winner: null as player | null,
+	isOver: false,
 	turn: 1 as player,
 });
 
@@ -20,5 +20,6 @@ export const toggleTurn = (turn: player) => {
 export const newGame = () => {
 	store.board = getEmptyBoard();
 	store.winner = null;
+	store.isOver = false;
 	store.turn = 1;
 };

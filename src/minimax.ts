@@ -28,6 +28,7 @@ export const makeMove = () => {
 	const winner = checkResultByCell(cell.x, cell.y, store.board);
 	if (winner) {
 		store.winner = winner;
+		store.isOver = true;
 		return;
 	}
 	store.turn = toggleTurn(store.turn);

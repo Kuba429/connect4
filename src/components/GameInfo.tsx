@@ -1,11 +1,16 @@
+import { useEffect } from "react";
 import { useSnapshot } from "valtio";
+import { howManyEmptyCells } from "../gameResult";
 import { newGame, player, store } from "../store";
 
 export const GameInfo = () => {
 	const state = useSnapshot(store);
-	const h1 = state.winner
-		? `${getColor(state.winner)} won`
-		: `${getColor(state.turn)}'s turn`;
+	let h1 = "It's a draw";
+	if (!state.isOver) h1 = `${getColor(state.turn)}'s turn`;
+	else if (state.winner !== null) h1 = `${getColor(state.winner)} won`;
+	useEffect(() => {
+		console.log(howManyEmptyCells(store.board));
+	}, [state.board]);
 	return (
 		<div className="game-info">
 			<h1>{h1}</h1>

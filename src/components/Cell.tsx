@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { checkResultByCell } from "../gameResult";
+import { checkResultByCell, howManyEmptyCells } from "../gameResult";
 import { makeMove } from "../minimax";
 import { player, store, toggleTurn } from "../store";
 
@@ -14,7 +14,7 @@ export const MAKE_MOVE_TIMEOUT = 50; // timeout used to force makeMove out of sy
 let isMovePending = false;
 export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 	const handleClick = () => {
-		if (store.winner) return;
+		if (store.isOver) return;
 		if (isMovePending) return;
 		isMovePending = true;
 		const newCell = insertCell(store.board, cell.x, store.turn);
@@ -22,6 +22,11 @@ export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 		const winner = checkResultByCell(newCell.x, newCell.y, store.board);
 		if (winner) {
 			store.winner = winner;
+			store.isOver = true;
+			return;
+		}
+		if (howManyEmptyCells(store.board) < 1) {
+			store.isOver = true;
 			return;
 		}
 		store.turn = toggleTurn(store.turn);
@@ -29,6 +34,10 @@ export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 		setTimeout(() => {
 			makeMove();
 			isMovePending = false;
+			if (howManyEmptyCells(store.board) < 1) {
+				store.isOver = true;
+				return;
+			}
 		}, MAKE_MOVE_TIMEOUT);
 	}; // this store access doesn't need to be reactive; only accesses proxy on click; love valtio <3
 	const colorClass = cell.value ? "player" + cell.value : "";
