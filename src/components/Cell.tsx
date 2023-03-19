@@ -11,9 +11,12 @@ export type cell = {
 	highlight: boolean;
 };
 export const MAKE_MOVE_TIMEOUT = 50; // timeout used to force makeMove out of sync loop
+let isMovePending = false;
 export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 	const handleClick = () => {
 		if (store.winner) return;
+		if (isMovePending) return;
+		isMovePending = true;
 		const newCell = insertCell(store.board, cell.x, store.turn);
 		if (!newCell) return;
 		const winner = checkResultByCell(newCell.x, newCell.y, store.board);
@@ -23,7 +26,10 @@ export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 		}
 		store.turn = toggleTurn(store.turn);
 		// IMPORTANT looks like safari blocks the main thread and awaits small timeouts. 50 seems to not be awaited
-		setTimeout(() => makeMove(), MAKE_MOVE_TIMEOUT);
+		setTimeout(() => {
+			makeMove();
+			isMovePending = false;
+		}, MAKE_MOVE_TIMEOUT);
 	}; // this store access doesn't need to be reactive; only accesses proxy on click; love valtio <3
 	const colorClass = cell.value ? "player" + cell.value : "";
 	const highlightClass = cell.highlight ? "highlight" : "";
