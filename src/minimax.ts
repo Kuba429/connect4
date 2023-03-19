@@ -25,9 +25,9 @@ export const makeMove = () => {
 	);
 	const cell = insertCell(store.board, bestX, store.turn);
 	if (!cell) throw Error("aaa");
-	const result = checkResultByCell(cell.x, cell.y, store.board);
-	if (result) {
-		store.winner = result.winner;
+	const winner = checkResultByCell(cell.x, cell.y, store.board);
+	if (winner) {
+		store.winner = winner;
 		return;
 	}
 	store.turn = toggleTurn(store.turn);

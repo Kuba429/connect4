@@ -15,9 +15,9 @@ export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 		if (store.winner) return;
 		const newCell = insertCell(store.board, cell.x, store.turn);
 		if (!newCell) return;
-		const result = checkResultByCell(newCell.x, newCell.y, store.board);
-		if (result) {
-			store.winner = result.winner;
+		const winner = checkResultByCell(newCell.x, newCell.y, store.board);
+		if (winner) {
+			store.winner = winner;
 			return;
 		}
 		store.turn = toggleTurn(store.turn);
