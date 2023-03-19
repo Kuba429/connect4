@@ -34,6 +34,7 @@ body {
 	background: $bg;
 	border-radius: 50%;
 	div {
+		position: relative;
 		transform: translateY(-150vh);
 		transition: ease transform 0.4s;
 		width: 100%;
@@ -54,6 +55,19 @@ body {
 	&.player2 {
 		div {
 			background-color: $yellow;
+		}
+	}
+	div.highlight {
+		&::after {
+			content: "";
+			position: absolute;
+			border-radius: 50%;
+			width: 50%;
+			height: 50%;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: white;
 		}
 	}
 }

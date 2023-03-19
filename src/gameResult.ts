@@ -5,6 +5,7 @@ type winResult = {
 	winner: player;
 	cells: cell[];
 };
+
 export const checkResult = (board: cell[][]): winResult | null => {
 	for (let y = 0; y < board.length; y++) {
 		const row = board[y];
@@ -21,15 +22,30 @@ export const checkResultByCell = (
 	y: number,
 	board: cell[][]
 ): winResult | null => {
+	let winner = null;
+	const cellsToHighlight: cell[] = [];
 	const hor = checkHorizontal(x, y, board);
-	if (hor) return hor;
+	if (hor) {
+		winner = hor.winner;
+		hor.cells.forEach((c) => (c.highlight = true));
+	}
 	const ver = checkVertical(x, y, board);
-	if (ver) return ver;
+	if (ver) {
+		winner = ver.winner;
+		ver.cells.forEach((c) => (c.highlight = true));
+	}
 	const diag1 = checkDiagonal1(x, y, board);
-	if (diag1) return diag1;
+	if (diag1) {
+		winner = diag1.winner;
+		diag1.cells.forEach((c) => (c.highlight = true));
+	}
 	const diag2 = checkDiagonal2(x, y, board);
-	if (diag2) return diag2;
-	return null;
+	if (diag2) {
+		winner = diag2.winner;
+		diag2.cells.forEach((c) => (c.highlight = true));
+	}
+	if (winner === null) return null;
+	return { winner, cells: cellsToHighlight };
 };
 
 // the 3 functions below are pretty similar but i decided to keep them separate in order to avoid unnecessary complexity. It's more readable that way and requirements will never change

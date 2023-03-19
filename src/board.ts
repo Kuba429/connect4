@@ -10,6 +10,7 @@ export const getEmptyBoard = () => {
 				id: y * 7 + x,
 				x,
 				y,
+				highlight: false,
 			};
 		}
 	}
