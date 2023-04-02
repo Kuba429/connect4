@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import { useSnapshot } from "valtio";
-import { howManyEmptyCells } from "../gameResult";
 import { newGame, player, store } from "../store";
 
 export const GameInfo = () => {

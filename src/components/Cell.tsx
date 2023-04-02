@@ -11,12 +11,11 @@ export type cell = {
 	highlight: boolean;
 };
 export const MAKE_MOVE_TIMEOUT = 50; // timeout used to force makeMove out of sync loop
-let isMovePending = false;
 export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 	const handleClick = () => {
 		if (store.isOver) return;
-		if (isMovePending) return;
-		isMovePending = true;
+		if (store.isMovePending) return;
+		store.isMovePending = true;
 		const newCell = insertCell(store.board, cell.x, store.turn);
 		if (!newCell) return;
 		const winner = checkResultByCell(newCell.x, newCell.y, store.board);
@@ -33,7 +32,7 @@ export const Cell: FC<{ cell: cell }> = ({ cell }) => {
 		// IMPORTANT looks like safari blocks the main thread and awaits small timeouts. 50 seems to not be awaited
 		setTimeout(() => {
 			makeMove();
-			isMovePending = false;
+			store.isMovePending = false;
 			if (howManyEmptyCells(store.board) < 1) {
 				store.isOver = true;
 				return;
